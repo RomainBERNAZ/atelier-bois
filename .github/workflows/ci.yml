@@ -19,7 +19,5 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - name: Typecheck, lint, tests et couverture du domaine
+      - name: Typecheck, lint, tests, couverture du domaine et audit des dépendances
         run: npm run check
-      - name: Audit des dépendances
-        run: npm audit --audit-level=high
