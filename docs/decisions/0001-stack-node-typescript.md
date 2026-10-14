@@ -1,6 +1,6 @@
 # 0001. API en Node et TypeScript
 
-- Statut : proposée (à confirmer par toi avant la première tâche)
+- Statut : acceptée
 - Date : 2026-10-14
 
 ## Contexte
