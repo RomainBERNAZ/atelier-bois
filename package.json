@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
-    "check": "npm run typecheck && npm run lint && npm run test:cov"
+    "audit:deps": "npm audit --audit-level=high",
+    "check": "npm run typecheck && npm run lint && npm run test:cov && npm run audit:deps"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
