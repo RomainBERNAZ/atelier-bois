@@ -16,13 +16,15 @@ Proposer un plan court et attendre sa validation avant de coder. Ne pas confondr
 - [PR #1](https://github.com/RomainBERNAZ/atelier-bois/pull/1) : tests des limites des longueurs et de la non-mutation. Quinze tests de domaine.
 - [PR #2](https://github.com/RomainBERNAZ/atelier-bois/pull/2) : audit des dépendances intégré à `npm run check`, sans doublon dans la CI. La commande nécessite désormais un accès réseau pour l'audit.
 
-## PR #3 fusionnée et état local
+## PR #3 et PR #4 fusionnées, état local
 
 La [PR #3](https://github.com/RomainBERNAZ/atelier-bois/pull/3) est fusionnée : confirmation par l'API GitHub le 15 octobre 2026, commit de fusion `79b97190290abc0d4129b5db6bb8edde79c6c4f4`.
 
-Elle livre l'exercice et ses onze tests, les instructions, la roadmap, le mémo et ce document. Les sessions 2 et 3 sont désormais cochées avec le numéro de PR. L'utilisateur a aussi validé la session 5 le 15 octobre 2026.
+Elle livre l'exercice de longueur et ses onze tests, les instructions, la roadmap, le mémo et ce document. Les sessions 2 et 3 sont cochées avec le numéro de PR. L'utilisateur a aussi validé la session 5 le 15 octobre 2026.
 
-`main` local a été synchronisé par avance rapide avec `origin/main`. La modification locale de la roadmap a été préservée par une mise en réserve temporaire puis restaurée. L'utilisateur a autorisé le 15 octobre 2026 la publication des cinq fichiers en attente : documentation, bilan et exercice de boucle simulée avec ses tests. Ils sont destinés à une PR sur la branche `test/publish-agent-loop-exercise` ; vérifier son état avant la reprise. Ne pas supprimer ou réinitialiser d'éventuels changements locaux.
+La [PR #4](https://github.com/RomainBERNAZ/atelier-bois/pull/4) est fusionnée le 15 octobre 2026, commit `a9dceb15db4a59167d051fa03c5b8496b64d4115`. Elle publie l'exercice de boucle simulée et ses 28 tests, le bilan de semaine 1 et les mises à jour documentaires. La roadmap intégrée laisse ouvertes les tâches du mini-agent réel.
+
+Au 15 octobre 2026, `main` local est synchronisé avec `origin/main` à ce commit et l'arbre de travail est propre. La publication de la branche `test/publish-agent-loop-exercise` est terminée ; aucune PR de cette branche n'est en attente.
 
 ## Exercices réalisés
 
@@ -31,22 +33,24 @@ Elle livre l'exercice et ses onze tests, les instructions, la roadmap, le mémo 
 - Convention propre à l'exercice : seules les séparations entre pièces sont réservées, jamais la coupe finale. Le reste est théorique ; ce n'est pas un plan de découpe réel.
 - Comparaison autorisée de deux agents sans accès au dépôt : contexte minimal, demande de clarification ; contexte riche avec convention et attentes, correction directement proposée. Les agents n'ont pas exécuté les tests ; vérification effectuée séparément. Un essai ne prouve pas une fiabilité générale.
 
-## Préparation de semaine 2 : boucle simulée
+## Semaine 2 : simulation et mini-agent réel
 
-L'utilisateur a choisi de continuer dans le chat et a validé un exercice isolé dans `eval/`, sans dépendance, connexion CLI ni appel au modèle. Ce choix ne remplace pas le livrable réel prévu dans `experiments/` et ne valide pas les cases de semaine 2.
+L'utilisateur a d'abord validé un exercice isolé dans `eval/`, puis a autorisé l'installation du SDK et la création du mini-agent dans `experiments/`. La simulation reste pédagogique ; elle ne remplace pas l'essai réel, exécuté une fois le 15 octobre 2026.
 
-- [Exercice de boucle](../eval/agent-loop-exercise.ts) : modèle injecté, scénario prédéfini et historique explicite. Deux outils autorisés, `validate_length` et `sum_lengths`, réutilisent `mm()` et `sumLengths()` ; leurs arguments et les réponses du faux modèle sont validés avant usage.
-- [Tests de boucle](../eval/agent-loop-exercise.test.ts) : 28 cas. Le premier montre une demande, la validation d'une longueur, la somme des longueurs, les résultats transmis au faux modèle et la réponse finale. Les autres couvrent les entrées invalides, un outil inconnu, une somme hors entiers sûrs, un scénario épuisé et une limite d'appels.
-- La limite compte tous les appels au faux modèle, réponse finale comprise. Les erreurs arrêtent l'exercice ; aucune commande issue du modèle n'est exécutée.
-- Limites : aucune décision réelle de LLM, aucun schéma Zod, aucun réseau ni MCP. La réponse finale est du texte prédéfini, pas un calcul ; la simulation ne garantit pas l'absence de nombres inventés par un futur vrai modèle.
+- [Exercice de boucle](../eval/agent-loop-exercise.ts) : modèle injecté, scénario prédéfini et historique explicite. Deux outils déterministes réutilisent `mm()` et `sumLengths()`.
+- [Tests de boucle](../eval/agent-loop-exercise.test.ts) : 28 cas. Le premier montre la demande, les deux appels d'outils, les résultats transmis au modèle simulé et sa réponse finale ; les autres couvrent les entrées invalides, un outil inconnu, une somme hors entiers sûrs, un scénario épuisé et une limite d'appels.
+- [Mini-agent réel](../experiments/copilot-agent.ts) : SDK Copilot, modèle `auto`, deux outils métier avec schémas Zod, allowlist exacte par `ToolSet` et refus des autres permissions. Chaque handler appelle `parse()` avant le calcul du domaine.
+- [Lanceur](../experiments/run-copilot-agent.ts) : `npm.cmd run agent:demo`. Le lancement réel a appelé `validate_length` (400 mm), puis `sum_lengths` (1000 mm), et le modèle a repris ces résultats. Cet appel a consommé du quota.
+- Le statut d'authentification SDK était faux en mode `empty`, puis vrai (`user`) en mode `copilot-cli` avec le dossier Copilot habituel. Aucun jeton n'a été lu ou journalisé.
+- La réponse finale reste du texte libre ; cette démonstration ne garantit pas qu'un modèle n'inventera jamais un nombre. Les mesures de tokens/contexte/caching, MCP et les entrées de carnet restent à faire.
 
-Pour rejouer la démonstration : `npm test -- eval/agent-loop-exercise.test.ts`. Lire le premier test avec l'utilisateur avant de connecter un vrai modèle.
+Les deux tâches de boucle minimale et de validation Zod des arguments d'outils sont cochées avant fusion, avec l'accord explicite de l'utilisateur. C'est une exception ponctuelle ; les autres coches restent soumises aux consignes du dépôt. Le commit `cf77332` est conservé localement sur `feat/copilot-sdk-agent` ; le push a échoué avec HTTP 403 et le navigateur intégré est déconnecté. Aucune PR n'est encore ouverte.
 
-Copilot CLI est présent dans WSL en version `1.0.98`. La connexion y signale un stockage de jeton en clair : `libsecret` et GNOME Keyring sont absents, tandis que D-Bus fonctionne. Aucun composant de trousseau n'a été installé pendant le diagnostic. L'utilisateur prévoit de cloner le projet côté Windows et d'utiliser la CLI native avec le Gestionnaire d'identifiants Windows ; ne pas accepter le stockage en clair ni lancer une connexion à sa place. Le SDK n'est pas une dépendance du projet et l'accès organisationnel au CLI reste non confirmé. Le SDK Copilot permet un accès programmatique avec un abonnement éligible, distinct d'une clé API OpenAI ou Anthropic ; ne pas imposer un nouvel abonnement sans examiner cette possibilité.
+Pour rejouer les tests simulés : `npm.cmd test -- eval/agent-loop-exercise.test.ts`. Pour lancer l'appel réel : `npm.cmd run agent:demo` ; il utilise du quota.
 
 ## Vérifications et validations restantes
 
-Les contrôles incluent désormais les tests de la boucle simulée : `npm run check` a réussi le 15 octobre 2026 avec 54 tests, une couverture du domaine de 100 % et aucune vulnérabilité détectée. Le rapport de couverture reste limité au domaine, pas à `eval/`. Relancer `npm run check` après de nouvelles modifications et avant publication.
+Dernier `npm.cmd run check` réussi le 15 octobre 2026 : 57 tests, lint et typecheck verts, couverture du domaine à 100 % et aucune vulnérabilité détectée. La couverture concerne `src/domain`, pas `eval/` ni `experiments/`. Relancer `npm.cmd run check` après les modifications documentaires et avant publication.
 
 Les cinq sessions sont réalisées et le [bilan de dix lignes](journal/bilan-semaine-1.md) est rédigé. Retour personnel de l'utilisateur : « Pour le moment rien ne me semble flou puisque nous ne sommes qu'au début. » Il a ensuite accepté de clôturer la semaine 1 sur cette base et de préparer le mini-agent de semaine 2. Le recul sur la fiabilité des agents reste à construire ; ne pas présenter le critère comme démontré pour chaque type de tâche.
 
@@ -58,11 +62,11 @@ Les commits et titres de PR doivent être français, au format `type(scope): cha
 
 La CLI `gh` était absente. Git HTTPS et la création de PR par API ont fonctionné. Ne jamais afficher ou enregistrer les identifiants d'authentification.
 
-## Prochaine conversation
+## Prochaine reprise
 
-1. Vérifier `git status`, les différences locales et les instructions actuelles.
-2. Expliquer le premier test de la boucle simulée avec l'utilisateur : qui choisit l'outil, qui calcule et comment le résultat revient au modèle. Ensuite seulement, cadrer le branchement d'un vrai modèle. La roadmap prévoit `experiments/`, absent de l'architecture actuelle : obtenir l'accord pour sa création et sa configuration, ainsi que pour toute dépendance ou modification de fichier protégé.
-3. Vérifier la PR de `test/publish-agent-loop-exercise`. Après sa fusion par l'utilisateur, un `git pull` sur `main` côté Windows récupérera les changements ; utiliser `npm ci` pour installer les dépendances propres à Windows. Une nouvelle PR ou une fusion nécessite une autorisation distincte. Ne pas pousser directement sur `main`.
-4. L'accord de préparation de semaine 2 n'autorise ni l'installation de dépendances, ni des appels LLM payants, ni la création d'un serveur MCP sans cadrage validé.
+1. Après authentification GitHub avec un compte ayant les droits d'écriture sur le dépôt, publier `feat/copilot-sdk-agent` et créer la PR associée. Le commit est localement prêt ; ne pas fusionner sans décision de l'utilisateur.
+2. La roadmap coche par anticipation, avec accord explicite, la boucle réelle et la validation Zod des arguments d'outils ; les coches ne signifient pas que la PR est fusionnée.
+3. Il reste à mesurer les tokens, la fenêtre de contexte et le prompt caching, puis à étudier MCP et son outil minimal.
+4. Rédiger une dizaine d'entrées de carnet et recueillir la validation personnelle du critère d'apprentissage. Ne pas considérer le critère comme acquis sans confirmation.
 
 Actualiser cette synthèse avant de changer de conversation lorsque l'état du projet évolue. Garder ici les faits utiles à la reprise, pas un historique exhaustif ; ne pas y stocker de secrets.

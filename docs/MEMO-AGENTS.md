@@ -104,6 +104,14 @@ Les tests de mutation peuvent compléter ces contrôles : une modification volon
 
 **Ce qu'on en retient :** aligner les commandes réduit les surprises entre local et CI, sans garantir que les environnements sont identiques. L'audit rend désormais la commande complète dépendante du réseau.
 
+### SDK Copilot sous Windows et validation des outils
+
+**Observation :** avec la version Node.js du SDK installée dans ce projet, le mode `empty` n'a pas reconnu la session Copilot Windows, tandis que le mode `copilot-cli` l'a reconnue. En mode `copilot-cli`, une allowlist construite avec `ToolSet` et une permission explicite limitée à deux outils personnalisés ont permis une exécution réelle. L'inspection du SDK montre que `defineTool` transforme le schéma Zod en déclaration d'outil, mais ne fait pas lui-même `parse()` des arguments reçus.
+
+**Ce qui a aidé :** réutiliser la session CLI connectée, limiter `availableTools` aux noms exacts, refuser les autres permissions, puis appeler `schema.parse()` dans chaque handler avant le domaine. Des tests vérifient les arguments invalides sans contacter le modèle.
+
+**Limite :** observation sur une machine Windows, une version du SDK et un seul appel réel. Cela ne démontre ni la sécurité générale du mode CLI, ni le comportement de tous les comptes ou environnements. Un appel réel consomme du quota.
+
 ## Faire vivre ce mémo
 
 Ajouter ou préciser une pratique lorsqu'une nouvelle leçon pertinente apparaît. Préférer enrichir une entrée existante à créer une répétition. Pour un retour d'expérience, indiquer l'observation, ce qui a aidé et ses limites ; ne pas attribuer à l'utilisateur une appréciation qu'il n'a pas exprimée.

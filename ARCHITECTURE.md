@@ -24,6 +24,7 @@ Les règles sont appliquées par ESLint (`eslint.config.js`) : un import interdi
 ## Dossiers hors couches
 
 - `eval/` : cas d'évaluation (vérifications déterministes, puis jugement qualitatif).
+- `experiments/` : prototypes pédagogiques isolés, non intégrés au produit ni aux couches de production.
 - `prompts/` : prompts versionnés. Aucune modification sans évaluation avant et après.
 - `infra/` : infrastructure (conteneurs, Terraform, déploiement), à partir de la phase 6.
 - `docs/decisions/` : décisions d'architecture. `docs/specs/` : une spec par tâche. `docs/journal/` : carnet de bord.
