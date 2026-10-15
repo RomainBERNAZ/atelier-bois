@@ -15,19 +15,21 @@
 ### Semaine 1 (19 au 25 octobre) : agent mode en conditions réelles
 
 - [x] Session 1 : tests d'une fonction existante (PR #1 fusionnée)
-- [ ] Session 2 : refactoring local (exercice isolé réalisé dans `eval/length-exercise.ts`, en attente de fusion)
-- [ ] Session 3 : correction d'un bug, contexte minimal puis riche (bug reproduit et corrigé, comparaison de deux agents réalisée ; en attente de fusion)
+- [x] Session 2 : refactoring local (exercice isolé réalisé dans `eval/length-exercise.ts`, PR #3 fusionnée)
+- [x] Session 3 : correction d'un bug, contexte minimal puis riche (bug reproduit et corrigé, comparaison de deux agents réalisée ; PR #3 fusionnée)
 - [x] Session 4 : script ou changement de CI ou d'infra (PR #2 fusionnée)
-- [ ] Session 5 : tâche multi-fichiers avec plan validé (bloc exercice, tests et documentation préparé ; validation humaine à confirmer)
-- [ ] Bilan écrit (`docs/journal/bilan-semaine-1.md`, dix lignes au plus)
+- [x] Session 5 : tâche multi-fichiers avec plan validé (PR #3 fusionnée ; validation humaine confirmée le 15 octobre 2026)
+- [x] Bilan écrit ([bilan de semaine 1](journal/bilan-semaine-1.md), dix lignes au plus)
 
 **Critère :** pour chaque type de tâche, tu sais dire si l'agent est fiable, quel contexte lui donner et ce que tu relis.
+
+**Clôture :** semaine 1 clôturée avec l'accord de l'utilisateur le 15 octobre 2026 ; préparation de la semaine 2 autorisée. Rien ne lui semble flou à ce stade ; le recul sur la fiabilité des agents reste à construire, sans considérer le critère comme démontré pour chaque type de tâche.
 
 **Supports réalisés :** [mémo des pratiques](MEMO-AGENTS.md) et [document de reprise](REPRISE.md). Ces supports ne remplacent pas le bilan ni la validation du critère d'apprentissage.
 
 ### Semaine 2 (26 octobre au 1er novembre) : le plus petit agent possible
 
-- [ ] Lire « Building effective agents » (Anthropic) et la documentation de tool use du fournisseur choisi
+- [x] Lire « Building effective agents » (Anthropic) et la documentation de tool use du fournisseur choisi
 - [ ] Boucle d'agent minimale : un modèle, deux outils simples, résultat renvoyé au modèle
 - [ ] Sorties validées par schéma (Zod)
 - [ ] Mesure des tokens, de la fenêtre de contexte et du prompt caching
