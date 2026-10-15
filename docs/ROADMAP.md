@@ -30,12 +30,14 @@
 ### Semaine 2 (26 octobre au 1er novembre) : le plus petit agent possible
 
 - [x] Lire « Building effective agents » (Anthropic) et la documentation de tool use du fournisseur choisi
-- [ ] Boucle d'agent minimale : un modèle, deux outils simples, résultat renvoyé au modèle
-- [ ] Sorties validées par schéma (Zod)
+- [x] Boucle d'agent minimale : un modèle, deux outils simples, résultat renvoyé au modèle (mini-agent Copilot exécuté une fois ; branche locale prête à publier)
+- [x] Arguments des outils du modèle validés par schéma (Zod) avant exécution (parsers et tests ; branche locale prête à publier)
 - [ ] Mesure des tokens, de la fenêtre de contexte et du prompt caching
 - [ ] Principe du MCP et un outil exposé par un serveur MCP minimal
 
-**Livrable :** une dizaine d'entrées de carnet et le mini-agent dans `experiments/` (je te donnerai la configuration pour que lint et typecheck le couvrent).
+**Coches anticipées :** ces deux tâches sont cochées avant fusion avec l'accord explicite de l'utilisateur ; elles ne signifient pas que la PR est ouverte ou fusionnée. La publication attend la résolution de l'authentification GitHub.
+
+**Livrable :** une dizaine d'entrées de carnet (à rédiger) et le mini-agent dans `experiments/` (présent et couvert par lint et typecheck).
 **Critère :** tu expliques la boucle d'un agent et pourquoi un calcul passe par un outil.
 
 ## Phase 2 : MVP liste de débit et découpe (2 au 22 novembre)
