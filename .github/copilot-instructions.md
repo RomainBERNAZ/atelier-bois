@@ -38,6 +38,30 @@ Une couche n'importe jamais une couche située au-dessus d'elle. ESLint le véri
 3. Reste dans le périmètre de la tâche. Pas de refactoring « au passage », pas de reformatage de fichiers non concernés.
 4. Réutilise l'existant : cherche un utilitaire équivalent avant d'en créer un.
 
+## Tests métier
+
+- Avant d'implémenter un calcul métier, explicite ses conventions et définis des exemples attendus : cas nominal, cas limites et cas distinguant les interprétations possibles. Si une convention reste ambiguë, demande une clarification plutôt que de l'inventer.
+- Déduis les résultats attendus du contrat métier, indépendamment de l'implémentation testée. Un taux de couverture, même de 100 %, ne remplace pas ces vérifications.
+- Chaque bug corrigé doit être reproduit par un test qui échoue avant la correction et passe après, sans modifier son attente pour le faire passer.
+
+## Mémo des pratiques
+
+- Consulte `docs/MEMO-AGENTS.md` lorsqu'une pratique de démarrage, de délégation ou de vérification est pertinente pour la tâche. Les règles obligatoires restent dans ces instructions.
+- Enrichis ce mémo lorsqu'une nouvelle leçon pertinente est observée : indique ce qu'il faut faire, ce qu'il faut éviter, pourquoi et un exemple concret. Distingue les observations des recommandations et explicite les limites ; ne généralise pas un essai isolé et n'invente pas l'appréciation de l'utilisateur.
+- Réutilise les entrées existantes et reste dans le périmètre du travail autorisé. N'en fais pas un journal de chaque modification et inclus ses mises à jour dans la prochaine PR autorisée.
+
+## Suivi de la roadmap
+
+- À chaque reprise après une fusion confirmée par GitHub ou par l'utilisateur, mets à jour `docs/ROADMAP.md` sans attendre de rappel ni redemander l'accord pour cette mise à jour.
+- Coche uniquement les tâches entièrement réalisées par les PR fusionnées et indique leur numéro. Laisse ouverts les éléments partiels, les critères d'apprentissage et les validations humaines tant que l'utilisateur ne les a pas confirmés.
+- Inclus ces mises à jour dans la prochaine PR autorisée et assure-toi que la roadmap est suivie par Git. Cette règle n'autorise ni une fusion automatique ni un push direct sur `main`.
+
+## Commits et PR
+
+- Messages de commit et titres de PR en français, au format `type(scope): changement concret` (scope facultatif). Décris le comportement modifié ou la garantie ajoutée, jamais seulement le nom de branche ou une formule générique.
+- Le titre de la PR doit être utilisable tel quel comme titre du commit de fusion, sans retouche par l'utilisateur. Exemple : `ci: intégrer l'audit des dépendances aux vérifications locales et CI`.
+- GitHub doit reprendre le titre de la PR pour les commits de fusion classique et squash (`merge_commit_title` et `squash_merge_commit_title` : `PR_TITLE`). Si ce réglage manque, signale-le ; ne change pas les réglages du dépôt sans autorisation.
+
 ## Interdits sans mon accord explicite
 
 - Modifier, désactiver (`skip`, `only`, `todo`) ou supprimer un test existant, ou baisser un seuil de couverture.
